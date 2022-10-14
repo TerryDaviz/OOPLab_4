@@ -4,9 +4,14 @@ namespace lab4
 {
     internal class Program
     {
+        public interface ICloneable
+        {
+            bool DoClone();
+        }
+
         public interface ISpeak
         {
-            public void Speak();
+            void Speak();
         }
 
         private static void Main(string[] args)
@@ -18,6 +23,23 @@ namespace lab4
             Crocodile crocodile = new Crocodile(11, 125, "amogus");
             Console.WriteLine("crocodile speak:");
             crocodile.Speak();
+            Shark shark = new Shark();
+            Console.WriteLine("Shark says: ");
+            shark.Speak();
+            Tiger tigar = new Tiger();
+            Console.WriteLine("Tiger says:");
+            tigar.Speak();
+            ICloneable dyadya = new DyadyaTolya();
+            dyadya.DoClone();
+
+            Animals aboba = new DyadyaTolya();
+            bool isDyadya = aboba is DyadyaTolya;
+            Console.WriteLine("is dyadya:" + isDyadya);
+
+            Animals fishb = new Fish();
+            Fish fishbb = fishb as Fish;
+            Console.WriteLine("fishb says: ");
+            fishbb.Speak();
         }
 
         public abstract class Animals : ISpeak
@@ -51,15 +73,19 @@ namespace lab4
                 set => this.weigth = value;
             }
 
-            public void Speak()
+            public virtual void Speak()
             {
-                Console.WriteLine("ty cho na");
             }
 
             public override string ToString()
             {
                 return "class animals";
             }
+        }
+
+        public abstract class BaseClone
+        {
+            public abstract bool DoClone();
         }
 
         public class Birds : Animals
@@ -73,10 +99,28 @@ namespace lab4
 
             public bool HasWings => this._hasWings;
 
+            public override void Speak()
+            {
+                Console.WriteLine("owo");
+            }
+
             public override string ToString()
             {
                 Console.WriteLine("class Birds");
                 return "class Birds";
+            }
+        }
+
+        public class DyadyaTolya : Animals, ICloneable, ISpeak
+        {
+            public bool DoClone()
+            {
+                return true;
+            }
+
+            public override void Speak()
+            {
+                Console.WriteLine("Ty cho na?");
             }
         }
 
@@ -88,11 +132,6 @@ namespace lab4
             }
         }
 
-        private abstract class BaseClone
-        {
-            public abstract bool DoClone();
-        }
-
         private class Crocodile : Animals
         {
             public Crocodile(int age, int weigth, string name)
@@ -102,7 +141,7 @@ namespace lab4
                 Name = name;
             }
 
-            public void Speak()
+            public override void Speak()
             {
                 Console.WriteLine("yo bro");
             }
@@ -137,7 +176,7 @@ namespace lab4
                 IsPredator = true;
             }
 
-            public void Speak()
+            public override void Speak()
             {
                 Console.WriteLine("lev klichka tigar");
             }
@@ -174,7 +213,7 @@ namespace lab4
             {
             }
 
-            public void Speak()
+            public override void Speak()
             {
                 Console.WriteLine("kurlyk kurlyk");
             }
@@ -188,7 +227,7 @@ namespace lab4
 
         private class Parrot : Birds
         {
-            public void Speak()
+            public override void Speak()
             {
                 Console.WriteLine("ispantsyyyy");
             }
@@ -202,7 +241,12 @@ namespace lab4
 
         private sealed class Shark : Fish, ISpeak
         {
-            public void Speak()
+            public bool DoClone()
+            {
+                return true;
+            }
+
+            public override void Speak()
             {
                 Console.WriteLine("baby shark turururu");
             }
@@ -226,7 +270,7 @@ namespace lab4
                 return base.GetHashCode();
             }
 
-            public void Speak()
+            public override void Speak()
             {
                 Console.WriteLine("meow");
             }
