@@ -17,6 +17,7 @@ namespace lab4
         private static void Main(string[] args)
         {
             Lion lion = new Lion();
+            Console.WriteLine("lion is predator: ");
             Console.WriteLine(lion.IsPredator);
             Birds bird = new Birds();
             Owl owl = new Owl();
@@ -40,6 +41,14 @@ namespace lab4
             Fish fishbb = fishb as Fish;
             Console.WriteLine("fishb says: ");
             fishbb.Speak();
+            Console.WriteLine("IAmPrinting: ");
+            Printer print = new Printer();
+            print.IAmPrinting(fishbb);
+            Animals[] arr = { owl, tigar, aboba };
+            foreach (Animals x in arr)
+            {
+                print.IAmPrinting(x);
+            }
         }
 
         public abstract class Animals : ISpeak
@@ -160,6 +169,11 @@ namespace lab4
             public Fish()
             {
                 this._canSwim = true;
+            }
+
+            public override void Speak()
+            {
+                Console.WriteLine("bruh");
             }
 
             public override string ToString()
